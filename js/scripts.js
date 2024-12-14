@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 function setupHomePage() {
     const games = [
         {
-            id: 'league-of-legends',
-            name: 'League of Legends',
+            id: 'apex-legends',
+            name: 'Apex Legends',
             description: 'Track player stats, leaderboards, and performance!',
         },
         {
@@ -20,8 +20,8 @@ function setupHomePage() {
             description: 'Analyze player rankings, matches, and wins!',
         },
         {
-            id: 'valorant',
-            name: 'Valorant',
+            id: 'the-division-2',
+            name: 'The Division 2',
             description: 'Review player scores, kill ratios, and more!',
         },
     ];
@@ -34,7 +34,7 @@ function setupHomePage() {
 
         const button = document.createElement('button');
         button.textContent = 'View Stats';
-        button.onclick = () => viewGame(game.id); // Assign click event here
+        button.onclick = () => viewGame(game.id);
 
         card.innerHTML = `
             <h2>${game.name}</h2>
@@ -45,12 +45,11 @@ function setupHomePage() {
     });
 }
 
-
 function viewGame(gameId) {
     const gamePages = {
-        'league-of-legends': 'league-of-legends.html',
-        'CS:GO': 'csgo.html',
-        'valorant': 'valorant.html',
+        'apex-legends': 'apex-legends.html',
+        'csgo': 'csgo.html',
+        'the-division-2': 'the-division-2.html',
     };
 
     if (gamePages[gameId]) {
