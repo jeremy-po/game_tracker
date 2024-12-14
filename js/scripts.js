@@ -1,11 +1,9 @@
 import { loadComponent } from './utils.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Load header and footer
-    await loadComponent('#header-placeholder', '/partials/header.html');
-    await loadComponent('#footer-placeholder', '/partials/footer.html');
+    await loadComponent('#header-placeholder', '/public/partials/header.html');
+    await loadComponent('#footer-placeholder', '/public/partials/footer.html');
 
-    // Create the home page content
     setupHomePage();
 });
 
