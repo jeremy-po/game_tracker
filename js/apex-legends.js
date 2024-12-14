@@ -7,18 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function searchPlayer() {
-    const platform = 'origin';
+    const platform = 'origin';  
     const playerName = document.getElementById('player-name').value.trim();
 
     if (!playerName) {
-        alert('Please enter an Origin player name.');
+        alert('Please enter a player name.');
         return;
     }
 
     try {
         const response = await fetch(`${API_URL}?platform=${platform}&query=${playerName}`, {
             headers: {
-                '47178763-25c4-42f1-9d74-cad4de4a154f': API_KEY
+                'TRN-API-KEY': API_KEY
             }
         });
 
@@ -49,6 +49,9 @@ function displayResults(results) {
         playerCard.innerHTML = `
             <h3>${player.platformUserHandle}</h3>
             <p>Platform: ${player.platformSlug}</p>
+            <p>Rank: ${player.rank || 'N/A'}</p>
+            <p>Kills: ${player.kills || 'N/A'}</p>
+            <p>Wins: ${player.wins || 'N/A'}</p>
         `;
         resultsContainer.appendChild(playerCard);
     });

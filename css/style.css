@@ -157,3 +157,40 @@ main h1 {
 .results-container p {
     color: #7f8c8d;
 }
+
+.player-card {
+    background-color: #ecf0f1;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    margin: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.player-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.player-card h3 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.player-card p {
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+
+.player-card .platform {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.player-card .rank {
+    color: #e74c3c;
+    font-weight: bold;
+}
