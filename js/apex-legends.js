@@ -1,58 +1,64 @@
-const API_URL = 'https://public-api.tracker.gg/v2/apex/standard/search';
-const API_KEY = '47178763-25c4-42f1-9d74-cad4de4a154f';
-
-document.addEventListener('DOMContentLoaded', () => {
-    const searchButton = document.getElementById('search-btn');
-    searchButton.addEventListener('click', searchPlayer);
-});
-
-async function searchPlayer() {
-    const platform = 'origin';  
-    const playerName = document.getElementById('player-name').value.trim();
-
-    if (!playerName) {
-        alert('Please enter a player name.');
-        return;
-    }
-
+async function fetchPlayerStats(playerName, platform) {
+    const API_URL = `https://api.mozambiquehe.re/bridge?auth=95637a7af45f24a6026d3291407b0957&player=${playerName}&platform=${platform}`;
+    
     try {
-        const response = await fetch(`${API_URL}?platform=${platform}&query=${playerName}`, {
-            headers: {
-                'TRN-API-KEY': API_KEY
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-
+        const response = await fetch(API_URL);
         const data = await response.json();
-        displayResults(data.data); 
+        
+        if (data.errors) {
+            console.error('Error fetching data:', data.errors);
+            return;
+        }
+        
+        displayPlayerStats(data);
     } catch (error) {
-        console.error('Failed to fetch player data:', error);
-        alert('Could not fetch player stats. Please try again later.');
+        console.error('Error fetching data:', error);
     }
 }
 
-function displayResults(results) {
-    const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = '';
-
-    if (!results || results.length === 0) {
-        resultsContainer.innerHTML = '<p>No players found. Please refine your search.</p>';
+function displayPlayerStats(data) {
+    const statsContainer = document.querySelector('.results-container');
+    
+    statsContainer.innerHTML = '';
+    
+    if (!data || !data.global) {
+        statsContainer.innerHTML = '<p>No data found for this player.</p>';
         return;
     }
 
-    results.forEach((player) => {
-        const playerCard = document.createElement('div');
-        playerCard.classList.add('player-card');
-        playerCard.innerHTML = `
-            <h3>${player.platformUserHandle}</h3>
-            <p>Platform: ${player.platformSlug}</p>
-            <p>Rank: ${player.rank || 'N/A'}</p>
-            <p>Kills: ${player.kills || 'N/A'}</p>
-            <p>Wins: ${player.wins || 'N/A'}</p>
-        `;
-        resultsContainer.appendChild(playerCard);
-    });
+    const kills = data.total.kills?.value || 'N/A'; 
+    const damage = data.total.damage?.value || 'N/A'; 
+
+
+    const playerStats = `
+        <h2>Player Stats for ${data.global.name}</h2>
+        <p>Platform: ${data.global.platform}</p>
+        <p>Level: ${data.global.level}</p>
+        <p>Kills: ${kills}</p>
+        <p>Damage: ${damage}</p>
+
+    `;
+    
+    statsContainer.innerHTML = playerStats;
 }
+
+
+
+function handleSearch() {
+    const playerName = document.querySelector('.search-container input[type="text"]').value;
+    const platform = document.querySelector('select[name="platform"]').value;
+    
+    if (playerName && platform) {
+        fetchPlayerStats(playerName, platform);
+    } else {
+        alert('Please enter a player name and platform.');
+    }
+}
+
+document.querySelector('.search-container button').addEventListener('click', handleSearch);
+
+document.querySelector('.search-container input[type="text"]').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        handleSearch();
+    }
+});

@@ -14,14 +14,10 @@ function setupHomePage() {
             name: 'Apex Legends',
             description: 'Track player stats, leaderboards, and performance!',
         },
+
         {
-            id: 'csgo',
-            name: 'CS:GO',
-            description: 'Analyze player rankings, matches, and wins!',
-        },
-        {
-            id: 'the-division-2',
-            name: 'The Division 2',
+            id: 'fortnite',
+            name: 'Fortnite',
             description: 'Review player scores, kill ratios, and more!',
         },
     ];
@@ -48,8 +44,7 @@ function setupHomePage() {
 function viewGame(gameId) {
     const gamePages = {
         'apex-legends': 'apex-legends.html',
-        'csgo': 'csgo.html',
-        'the-division-2': 'the-division-2.html',
+        'fortnite': 'fortnite.html',
     };
 
     if (gamePages[gameId]) {
