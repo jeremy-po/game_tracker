@@ -1,4 +1,4 @@
-const API_URL = 'https://www.steamwebapi.com/explore/api/profile'; 
+const API_URL = 'https://www.steamwebapi.com/steam/api/profile'; 
 const API_KEY = '3L83DIFLBNCI8R4K'; 
 
 async function fetchPlayerData(playerName) {
@@ -7,7 +7,7 @@ async function fetchPlayerData(playerName) {
         return;
     }
 
-    const url = `${API_URL}?key=${API_KEY}&search=${playerName}`;
+    const url = `${API_URL}?key=${API_KEY}&id=${playerName}&state=detailed`; 
 
     try {
         const response = await fetch(url);
@@ -28,17 +28,21 @@ async function fetchPlayerData(playerName) {
 function displayResults(data) {
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = ''; 
-    if (!data || !data.response || !data.response.players) {
+
+    if (!data || !data.response || !data.response.player) {
         resultsContainer.innerHTML = '<p>No stats found for the player. Please refine your search.</p>';
         return;
     }
 
-    const player = data.response.players[0]; 
+    const player = data.response.player;
     const statsHtml = `
         <h2>Player: ${player.personaname}</h2>
         <p>Profile URL: <a href="${player.profileurl}" target="_blank">View Profile</a></p>
         <p>Steam ID: ${player.steamid}</p>
         <p>Online Status: ${player.personastate}</p>
+        <p>Trade Ban: ${player.tradeban ? 'Yes' : 'No'}</p>
+        <p>VAC Ban: ${player.vacban ? 'Yes' : 'No'}</p>
+        <p>Profile Level: ${player.level}</p>
         <img src="${player.avatarfull}" alt="${player.personaname}'s Avatar" />
     `;
     
