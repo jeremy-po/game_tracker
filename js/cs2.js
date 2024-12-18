@@ -7,7 +7,7 @@ async function fetchPlayerData(playerName) {
         return;
     }
 
-    const url = `${API_URL}?key=${API_KEY}&id=${playerName}&state=detailed`; 
+    const url = `${API_URL}?key=${API_KEY}&id=${playerName}`;
 
     try {
         const response = await fetch(url);
