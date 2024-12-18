@@ -44,7 +44,7 @@ function setupHomePage() {
 function viewGame(gameId) {
     const gamePages = {
         'apex-legends': 'apex-legends.html',
-        'lol': 'lol.html',
+        'League of Legends': 'lol.html',
     };
 
     if (gamePages[gameId]) {
