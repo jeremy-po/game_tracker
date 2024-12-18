@@ -18,7 +18,7 @@ function setupHomePage() {
         {
             id: 'lol',
             name: 'League of Legends',
-            description: 'Review player scores, kill ratios, and more!',
+            description: 'Review summoner stats, and more!',
         },
     ];
 
@@ -44,7 +44,7 @@ function setupHomePage() {
 function viewGame(gameId) {
     const gamePages = {
         'apex-legends': 'apex-legends.html',
-        'League of Legends': 'lol.html',
+        'lol': 'lol.html',
     };
 
     if (gamePages[gameId]) {
