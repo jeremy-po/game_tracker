@@ -1,7 +1,6 @@
 {
   "name": "game-tracker",
   "version": "1.0.0",
-  "description": "",
   "main": "vite.config.js",
   "scripts": {
     "start": "vite",
@@ -12,5 +11,14 @@
   "license": "ISC",
   "devDependencies": {
     "vite": "^6.0.3"
-  }
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0",
+    "nanoid": "^3.3.8",
+    "picocolors": "^1.1.1",
+    "postcss": "^8.4.49",
+    "rollup": "^4.28.1",
+    "source-map-js": "^1.2.1"
+  },
+  "description": ""
 }
