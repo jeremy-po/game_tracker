@@ -1,20 +1,24 @@
-const API_URL = 'https://www.steamwebapi.com/explore/api/profile';
-const API_KEY = '3L83DIFLBNCI8R4K';
+const API_URL = 'https://www.steamwebapi.com/explore/api/profile'; 
+const API_KEY = '3L83DIFLBNCI8R4K'; 
 
 async function fetchPlayerData(playerName) {
-    const url = `${API_URL}/steam/${playerName}`;
+    if (!playerName) {
+        alert('Please enter a valid player name.');
+        return;
+    }
+
+    const url = `${API_URL}?key=${API_KEY}&search=${playerName}`;
+
     try {
-        const response = await fetch(url, {
-            headers: {
-                'TRN-Api-Key': API_KEY,
-                'Content-Type': 'application/json',
-            },
-        });
+        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
+
         const data = await response.json();
-        displayResults(data.data);
+
+        displayResults(data);
     } catch (error) {
         console.error('Failed to fetch player data:', error);
         alert('Error fetching data. Please try again later.');
@@ -24,34 +28,31 @@ async function fetchPlayerData(playerName) {
 function displayResults(data) {
     const resultsContainer = document.getElementById('results');
     resultsContainer.innerHTML = ''; 
-
-    if (!data) {
+    if (!data || !data.response || !data.response.players) {
         resultsContainer.innerHTML = '<p>No stats found for the player. Please refine your search.</p>';
         return;
     }
 
-    const playerStats = `
-        <h2>Player Profile: ${data.platformInfo.platformUserHandle}</h2>
-        <img src="${data.platformInfo.avatarfull}" alt="Player Avatar" />
-        <p><strong>Steam ID:</strong> ${data.platformInfo.steamid}</p>
-        <p><strong>Account Name:</strong> ${data.platformInfo.accountname}</p>
-        <p><strong>Steam Profile:</strong> <a href="${data.platformInfo.profileurl}" target="_blank">Visit Profile</a></p>
-
-        <h3>Statistics:</h3>
-        <p><strong>Kills:</strong> ${data.segments[0].stats.kills.displayValue}</p>
-        <p><strong>Deaths:</strong> ${data.segments[0].stats.deaths.displayValue}</p>
-        <p><strong>K/D Ratio:</strong> ${data.segments[0].stats.kd.displayValue}</p>
-        <p><strong>Matches Played:</strong> ${data.segments[0].stats.matchesPlayed.displayValue}</p>
+    const player = data.response.players[0]; 
+    const statsHtml = `
+        <h2>Player: ${player.personaname}</h2>
+        <p>Profile URL: <a href="${player.profileurl}" target="_blank">View Profile</a></p>
+        <p>Steam ID: ${player.steamid}</p>
+        <p>Online Status: ${player.personastate}</p>
+        <img src="${player.avatarfull}" alt="${player.personaname}'s Avatar" />
     `;
-
-    resultsContainer.innerHTML = playerStats;
+    
+    resultsContainer.innerHTML = statsHtml; 
 }
 
-document.getElementById('search-btn').addEventListener('click', () => {
+document.getElementById('search-btn').addEventListener('click', function () {
     const playerName = document.getElementById('player-name').value.trim();
-    if (playerName) {
+    fetchPlayerData(playerName);
+});
+
+document.getElementById('player-name').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        const playerName = document.getElementById('player-name').value.trim();
         fetchPlayerData(playerName);
-    } else {
-        alert('Please enter a player name.');
     }
 });
