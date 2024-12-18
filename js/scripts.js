@@ -16,8 +16,8 @@ function setupHomePage() {
         },
 
         {
-            id: 'cs2',
-            name: 'CS2',
+            id: 'fortnite',
+            name: 'fortnite',
             description: 'Review player scores, kill ratios, and more!',
         },
     ];
@@ -44,7 +44,7 @@ function setupHomePage() {
 function viewGame(gameId) {
     const gamePages = {
         'apex-legends': 'apex-legends.html',
-        'cs2': 'cs2.html',
+        'fortnite': 'fortnite.html',
     };
 
     if (gamePages[gameId]) {
